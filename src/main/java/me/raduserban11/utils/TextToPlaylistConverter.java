@@ -24,8 +24,7 @@ public class TextToPlaylistConverter {
 
         List<Song> songs = new ArrayList<>();
         bufferedReader.lines().forEach(line -> {
-            String[] parts;
-            parts = line.split(" - ");
+            String[] parts = line.split(" - ");
             String artist = parts[0];
             String songName = parts[1];
             Song song = new Song(songName, artist);

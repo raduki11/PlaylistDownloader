@@ -17,6 +17,7 @@ public class Main {
             path = path.replaceFirst("\"", "").substring(0, path.length() - 2);
 
         Playlist playlist = TextToPlaylistConverter.convert(new File(path));
+
         Downloader downloader =  new Downloader();
         downloader.download(playlist);
     }
