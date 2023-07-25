@@ -35,4 +35,9 @@ class SongTest {
         Song song2 = new Song("apricots", "bicep");
         assertEquals(song1.hashCode(), song2.hashCode());
     }
+
+    @Test
+    void testGetFullName(){
+        assertEquals(song1.getFullName(), "bicep - apricots");
+    }
 }

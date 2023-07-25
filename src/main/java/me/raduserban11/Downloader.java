@@ -17,7 +17,7 @@ public class Downloader {
 
     private List<Song> skipped = new ArrayList<>();
 
-    public int songsDownloaded = 0;
+    private int songsDownloaded = 0;
 
     public void download(Playlist playlist) {
         WebDriver driver = new ChromeDriver();
@@ -52,7 +52,25 @@ public class Downloader {
         }
     }
 
-    public List<Song> getSkipped() {
-        return skipped;
+    public String message() {
+        StringBuilder sb = new StringBuilder();
+        int numberOfSkippedSongs = skipped.size();
+
+        sb.append("Process completed successfully. Playlist Downloader downloaded " + songsDownloaded + " songs");
+
+        if (numberOfSkippedSongs > 0) {
+            sb.append(" and skipped the following " + skipped.size());
+            if (skipped.size() == 1)
+                sb.append(" song:\n");
+            else sb.append(" songs:\n");
+
+            for (Song skippedSong : skipped) {
+                sb.append(skippedSong.getFullName() + '\n');
+            }
+        } else {
+            sb.append(" and skipped 0 songs.");
+        }
+
+        return sb.toString();
     }
 }

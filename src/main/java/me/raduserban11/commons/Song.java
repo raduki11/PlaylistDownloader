@@ -20,6 +20,10 @@ public class Song {
         return artist;
     }
 
+    public String getFullName(){
+        return artist + " - " + name;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
