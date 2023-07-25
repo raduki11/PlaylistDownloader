@@ -1,6 +1,7 @@
 package me.raduserban11;
 
 import me.raduserban11.commons.Playlist;
+import me.raduserban11.commons.Song;
 import me.raduserban11.utils.TextToPlaylistConverter;
 
 import java.io.File;
@@ -20,5 +21,9 @@ public class Main {
 
         Downloader downloader =  new Downloader();
         downloader.download(playlist);
+
+        for(Song skipped : downloader.getSkipped()){
+            System.out.println(skipped);
+        }
     }
 }
