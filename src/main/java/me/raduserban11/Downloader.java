@@ -15,9 +15,9 @@ import java.util.List;
 
 public class Downloader {
 
-    private List<Song> skipped = new ArrayList<>();
+    protected List<Song> skipped = new ArrayList<>();
 
-    private int songsDownloaded = 0;
+    protected List<Song> downloaded = new ArrayList<>();
 
     public void download(Playlist playlist) {
         WebDriver driver = new ChromeDriver();
@@ -25,13 +25,19 @@ public class Downloader {
         for (Song song : playlist.getSongs()) {
             String ytUrl = "https://www.youtube.com/results?search_query=" + song.getName().replace(" ", "+");
             driver.get(ytUrl);
-            if (songsDownloaded == 0) {
+            if (downloaded.size() == 0) {
                 WebElement acceptButton = driver.findElement(By.xpath("/html/body/ytd-app/ytd-consent-bump-v2-lightbox/tp-yt-paper-dialog/div[4]/div[2]/div[6]/div[1]/ytd-button-renderer[2]/yt-button-shape/button"));
                 acceptButton.click();
             }
             driver.navigate().refresh();
-            WebElement thumbnail = new WebDriverWait(driver, Duration.ofSeconds(10))
-                    .until(d -> d.findElement(By.xpath("/html/body/ytd-app/div[1]/ytd-page-manager/ytd-search/div[1]/ytd-two-column-search-results-renderer/div/ytd-section-list-renderer/div[2]/ytd-item-section-renderer/div[3]/ytd-video-renderer[1]/div[1]/ytd-thumbnail/a")));
+            WebElement thumbnail;
+            try {
+                thumbnail = new WebDriverWait(driver, Duration.ofSeconds(10))
+                        .until(d -> d.findElement(By.xpath("/html/body/ytd-app/div[1]/ytd-page-manager/ytd-search/div[1]/ytd-two-column-search-results-renderer/div/ytd-section-list-renderer/div[2]/ytd-item-section-renderer/div[3]/ytd-video-renderer[1]/div[1]/ytd-thumbnail/a")));
+            } catch (TimeoutException e){
+                skipped.add(song);
+                continue;
+            }
             String songLink = thumbnail.getAttribute("href");
             driver.get("https://ytmp3.nu/E80bdA/");
             WebElement urlBar = driver.findElement(By.id("url"));
@@ -48,7 +54,7 @@ public class Downloader {
             }
             String downloadLink = downloadButton.getAttribute("href");
             driver.get(downloadLink);
-            songsDownloaded++;
+            downloaded.add(song);
         }
     }
 
@@ -56,7 +62,7 @@ public class Downloader {
         StringBuilder sb = new StringBuilder();
         int numberOfSkippedSongs = skipped.size();
 
-        sb.append("Process completed successfully. Playlist Downloader downloaded " + songsDownloaded + " songs");
+        sb.append("Process completed successfully. Playlist Downloader downloaded " + numberOfSongsDownloaded() + " songs");
 
         if (numberOfSkippedSongs > 0) {
             sb.append(" and skipped the following " + skipped.size());
@@ -72,5 +78,21 @@ public class Downloader {
         }
 
         return sb.toString();
+    }
+
+    public int numberOfSkippedSongs() {
+        return skipped.size();
+    }
+
+    public int numberOfSongsDownloaded() {
+        return downloaded.size();
+    }
+
+    public void setSkipped(List<Song> skipped) {
+        return;
+    }
+
+    public void setDownloaded(List<Song> downloaded) {
+        return;
     }
 }
