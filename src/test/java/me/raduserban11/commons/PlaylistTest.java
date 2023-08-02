@@ -23,12 +23,12 @@ class PlaylistTest {
     }
 
     @Test
-    void getName() {
+    void testGetName() {
         assertEquals(playlist1.getName(), "abc");
     }
 
     @Test
-    void getSongs() {
+    void testGetSongs() {
         assertEquals(playlist1.getSongs(), List.of(
                 new Song("heartless", "the weeknd"),
                 new Song("heartless", "kanye west"),

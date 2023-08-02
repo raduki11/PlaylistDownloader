@@ -1,0 +1,139 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > TextToPlaylistConverter</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">me.raduserban11.utils</a>
+</div>
+
+<h1>Coverage Summary for Class: TextToPlaylistConverter (me.raduserban11.utils)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">TextToPlaylistConverter</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/14)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package me.raduserban11.utils;
+&nbsp;
+&nbsp;import me.raduserban11.commons.Playlist;
+&nbsp;import me.raduserban11.commons.Song;
+&nbsp;
+&nbsp;import java.io.BufferedReader;
+&nbsp;import java.io.File;
+&nbsp;import java.io.FileNotFoundException;
+&nbsp;import java.io.FileReader;
+&nbsp;import java.util.ArrayList;
+&nbsp;import java.util.List;
+&nbsp;
+<b class="nc">&nbsp;public class TextToPlaylistConverter {</b>
+&nbsp;
+&nbsp;    public static Playlist convert(File file){
+&nbsp;        FileReader fileReader;
+&nbsp;        BufferedReader bufferedReader;
+&nbsp;        try {
+<b class="nc">&nbsp;            fileReader =  new FileReader(file);</b>
+<b class="nc">&nbsp;            bufferedReader = new BufferedReader(fileReader);</b>
+<b class="nc">&nbsp;        } catch (FileNotFoundException e) {</b>
+<b class="nc">&nbsp;            throw new RuntimeException(e);</b>
+<b class="nc">&nbsp;        }</b>
+&nbsp;
+<b class="nc">&nbsp;        List&lt;Song&gt; songs = new ArrayList&lt;&gt;();</b>
+<b class="nc">&nbsp;        bufferedReader.lines().forEach(line -&gt; {</b>
+<b class="nc">&nbsp;            String[] parts = line.split(&quot; - &quot;);</b>
+<b class="nc">&nbsp;            String artist = parts[0];</b>
+<b class="nc">&nbsp;            String songName = parts[1];</b>
+<b class="nc">&nbsp;            Song song = new Song(songName, artist);</b>
+<b class="nc">&nbsp;            songs.add(song);</b>
+&nbsp;        });
+&nbsp;
+<b class="nc">&nbsp;        return new Playlist(file.getName(), songs);</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2023-08-02 22:54</div>
+</div>
+</body>
+</html>
