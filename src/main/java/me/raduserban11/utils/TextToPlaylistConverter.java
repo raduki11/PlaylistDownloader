@@ -31,6 +31,6 @@ public class TextToPlaylistConverter {
             songs.add(song);
         });
 
-        return new Playlist(file.getName(), songs);
+        return new Playlist(file.getName().substring(0, file.getName().length() - 4), songs);
     }
 }
