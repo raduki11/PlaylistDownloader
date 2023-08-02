@@ -80,19 +80,11 @@ public class Downloader {
         return sb.toString();
     }
 
-    public int numberOfSkippedSongs() {
+    public int getNumberOfSkippedSongs() {
         return skipped.size();
     }
 
-    public int numberOfSongsDownloaded() {
+    public int getNumberOfSongsDownloaded() {
         return downloaded.size();
-    }
-
-    public void setSkipped(List<Song> skipped) {
-        return;
-    }
-
-    public void setDownloaded(List<Song> downloaded) {
-        return;
     }
 }
