@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 class PlaylistTest {
 
@@ -44,6 +45,40 @@ class PlaylistTest {
                 new Song("radioactive", "imagine dragons")
         ));
         assertEquals(playlist1, playlist2);
+    }
+
+    @Test
+    void testEqualsSameObject() {
+        assertEquals(playlist1, playlist1);
+    }
+
+    @Test
+    void testEqualsNullObject() {
+        assertNotEquals(playlist1, null);
+    }
+
+    @Test
+    void testEqualsDifferentClasses(){
+        assertNotEquals(playlist1, songs1);
+    }
+
+    @Test
+    void testEqualsNotSameName() {
+        Playlist playlist2 = new Playlist("abca", List.of(
+                new Song("heartless", "the weeknd"),
+                new Song("heartless", "kanye west"),
+                new Song("radioactive", "imagine dragons")
+        ));
+        assertNotEquals(playlist1, playlist2);
+    }
+
+    @Test
+    void testEqualsNotSameSongs() {
+        Playlist playlist2 = new Playlist("abc", List.of(
+                new Song("heartless", "the weeknd"),
+                new Song("heartless", "kanye west")
+        ));
+        assertNotEquals(playlist1, playlist2);
     }
 
     @Test

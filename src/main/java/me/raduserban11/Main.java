@@ -18,8 +18,8 @@ public class Main {
 
         Playlist playlist = TextToPlaylistConverter.convert(new File(path));
 
-        Downloader downloader = new Downloader();
-        downloader.download(playlist);
+        Downloader downloader = new Downloader(playlist);
+        downloader.download();
 
         System.out.println(downloader.message());
     }

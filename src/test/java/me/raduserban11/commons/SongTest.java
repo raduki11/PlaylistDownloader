@@ -31,6 +31,31 @@ class SongTest {
     }
 
     @Test
+    void testEqualsSameObject() {
+        assertEquals(song1, song1);
+    }
+
+    @Test
+    void testEqualsNullObject() {
+        assertNotEquals(song1, null);
+    }
+
+    @Test
+    void testEqualsDifferentClasses(){
+        assertNotEquals(song1, "ddd");
+    }
+
+    @Test
+    void testEqualsNotSameName(){
+        assertNotEquals(song1, new Song("glue", "bicep"));
+    }
+
+    @Test
+    void testEqualsNotSameArtist(){
+        assertNotEquals(song1, new Song("apricots", "drake"));
+    }
+
+    @Test
     void testHashCode() {
         Song song2 = new Song("apricots", "bicep");
         assertEquals(song1.hashCode(), song2.hashCode());
