@@ -56,7 +56,7 @@ class DownloaderTest {
                 new Song("skipped1", "artist3")
         );
 
-        assertEquals(downloader.message(), "Process completed successfully. Playlist Downloader downloaded 2 songs and skipped the following song(s):" +
+        assertEquals(downloader.message(), "Process completed successfully. Playlist Downloader downloaded 2 songs and skipped the following 1 song(s):" +
                 "\n\nartist3 - skipped1\n");
     }
 
@@ -81,7 +81,7 @@ class DownloaderTest {
         );
 
         assertEquals("Process was either stopped or did not complete successfully. Playlist Downloader downloaded " +
-                "2 songs and skipped the following song(s):\n\nartist3 - skipped1\n" +
+                "2 songs and skipped the following 1 song(s):\n\nartist3 - skipped1\n" +
                 "\n1 song(s) were neglected.", downloader.message());
     }
 }
