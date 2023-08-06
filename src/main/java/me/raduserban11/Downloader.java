@@ -2,6 +2,7 @@ package me.raduserban11;
 
 import me.raduserban11.commons.Playlist;
 import me.raduserban11.commons.Song;
+import me.raduserban11.utils.AdvertisementDetector;
 import me.raduserban11.utils.MyChromeDriver;
 import me.raduserban11.utils.exceptions.ElementNotFoundInTimeException;
 import org.openqa.selenium.By;
@@ -47,6 +48,17 @@ public class Downloader {
             try {
                 thumbnail = driver.findElement(By.xpath("/html/body/ytd-app/div[1]/ytd-page-manager/ytd-search/div[1]/ytd-two-column-search-results-renderer/div/ytd-section-list-renderer/div[2]/ytd-item-section-renderer/div[3]/ytd-video-renderer[1]/div[1]/ytd-thumbnail/a"));
             } catch (ElementNotFoundInTimeException e) {
+                skip(song);
+                continue;
+            }
+            WebElement songTitle;
+            try{
+                songTitle = driver.findElement(By.xpath("/html/body/ytd-app/div[1]/ytd-page-manager/ytd-search/div[1]/ytd-two-column-search-results-renderer/div/ytd-section-list-renderer/div[2]/ytd-item-section-renderer/div[3]/ytd-video-renderer[1]/div[1]/div/div[1]/div/h3/a/yt-formatted-string"));
+                if(!AdvertisementDetector.isNotAdvertisement(songTitle.getText(), song)){
+                    skip(song);
+                    continue;
+                }
+            } catch (ElementNotFoundInTimeException e){
                 skip(song);
                 continue;
             }
