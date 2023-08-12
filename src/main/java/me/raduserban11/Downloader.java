@@ -55,6 +55,7 @@ public class Downloader {
             try{
                 songTitle = driver.findElement(By.xpath("/html/body/ytd-app/div[1]/ytd-page-manager/ytd-search/div[1]/ytd-two-column-search-results-renderer/div/ytd-section-list-renderer/div[2]/ytd-item-section-renderer/div[3]/ytd-video-renderer[1]/div[1]/div/div[1]/div/h3/a/yt-formatted-string"));
                 if(!AdvertisementDetector.isNotAdvertisement(songTitle.getText(), song)){
+                    System.out.println("reclama gasita: " + songTitle.getText());
                     skip(song);
                     continue;
                 }
