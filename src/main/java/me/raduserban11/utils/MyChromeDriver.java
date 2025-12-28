@@ -3,23 +3,52 @@ package me.raduserban11.utils;
 import me.raduserban11.utils.exceptions.ElementNotFoundInTimeException;
 import org.openqa.selenium.By;
 import org.openqa.selenium.TimeoutException;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.edge.EdgeDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
 
-public class MyChromeDriver extends EdgeDriver {
+public class MyChromeDriver {
 
-    @Override
+    private final WebDriver driver;
+
+    public MyChromeDriver() {
+        System.setProperty(
+                "webdriver.chrome.driver",
+                "D:/selenium/chromedriver/chromedriver.exe"
+        );
+
+        ChromeOptions options = new ChromeOptions();
+        options.addArguments("--remote-allow-origins=*");
+
+        this.driver = new ChromeDriver(options);
+    }
+
     public WebElement findElement(By by) throws ElementNotFoundInTimeException {
-        WebElement elementToFind;
         try {
-            elementToFind = new WebDriverWait(this, Duration.ofSeconds(10))
-                    .until(d -> super.findElement(by));
+            return new WebDriverWait(driver, Duration.ofSeconds(10))
+                    .until(d -> d.findElement(by));
         } catch (TimeoutException e) {
             throw new ElementNotFoundInTimeException();
         }
-        return elementToFind;
+    }
+
+    public void get(String url) {
+        driver.get(url);
+    }
+
+    public void navigateRefresh() {
+        driver.navigate().refresh();
+    }
+
+    public WebDriver unwrap() {
+        return driver;
+    }
+
+    public void quit() {
+        driver.quit();
     }
 }

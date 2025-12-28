@@ -6,7 +6,6 @@ import me.raduserban11.utils.AdvertisementDetector;
 import me.raduserban11.utils.MyChromeDriver;
 import me.raduserban11.utils.exceptions.ElementNotFoundInTimeException;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 import java.util.ArrayList;
@@ -25,13 +24,14 @@ public class Downloader {
     }
 
     public void download() {
-        WebDriver driver = new MyChromeDriver();
+        System.setProperty("selenium.manager.enabled", "false");
+        MyChromeDriver driver = new MyChromeDriver();
 
         for (Song song : playlist.getSongs()) {
             String ytUrl = "https://www.youtube.com/results?search_query=" + song.getName().replace(" ", "+") + ' ' + song.getArtist().replace(" ", "+");
             driver.get(ytUrl);
 
-            if (downloaded.size() == 0 && skipped.size() == 0) {
+            if (downloaded.isEmpty() && skipped.isEmpty()) {
                 WebElement acceptButton;
                 try {
                     acceptButton = driver.findElement(By.xpath("/html/body/ytd-app/ytd-consent-bump-v2-lightbox/tp-yt-paper-dialog/div[4]/div[2]/div[6]/div[1]/ytd-button-renderer[2]/yt-button-shape/button"));
@@ -42,7 +42,7 @@ public class Downloader {
                 acceptButton.click();
             }
 
-            driver.navigate().refresh();
+            driver.navigateRefresh();
 
             WebElement thumbnail;
             try {
@@ -69,7 +69,7 @@ public class Downloader {
 
             WebElement urlBar;
             try{
-                urlBar = driver.findElement(By.id("video"));
+                urlBar = driver.findElement(By.id("v"));
             } catch (ElementNotFoundInTimeException e){
                 skip(song);
                 continue;
