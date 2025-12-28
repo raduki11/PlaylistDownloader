@@ -31,7 +31,7 @@ public class Downloader {
             String ytUrl = "https://www.youtube.com/results?search_query=" + song.getName().replace(" ", "+") + ' ' + song.getArtist().replace(" ", "+");
             driver.get(ytUrl);
 
-            if (downloaded.size() == 0) {
+            if (downloaded.size() == 0 && skipped.size() == 0) {
                 WebElement acceptButton;
                 try {
                     acceptButton = driver.findElement(By.xpath("/html/body/ytd-app/ytd-consent-bump-v2-lightbox/tp-yt-paper-dialog/div[4]/div[2]/div[6]/div[1]/ytd-button-renderer[2]/yt-button-shape/button"));
@@ -69,7 +69,7 @@ public class Downloader {
 
             WebElement urlBar;
             try{
-                urlBar = driver.findElement(By.id("url"));
+                urlBar = driver.findElement(By.id("video"));
             } catch (ElementNotFoundInTimeException e){
                 skip(song);
                 continue;
@@ -78,7 +78,7 @@ public class Downloader {
 
             WebElement convertButton;
             try{
-                convertButton = driver.findElement(By.xpath("/html/body/form/div[2]/input[3]"));
+                convertButton = driver.findElement(By.xpath("/html/body/form/div[2]/button[2]"));
             } catch (ElementNotFoundInTimeException e){
                 skip(song);
                 continue;
@@ -87,17 +87,17 @@ public class Downloader {
 
             WebElement downloadButton;
             try {
-                downloadButton = driver.findElement(By.xpath("/html/body/form/div[2]/a[1]"));
+                downloadButton = driver.findElement(By.xpath("/html/body/form/div[2]/button[1]"));
             } catch (ElementNotFoundInTimeException e) {
                 skip(song);
                 continue;
             }
-            String downloadLink = downloadButton.getAttribute("href");
-            driver.get(downloadLink);
-            downloaded.add(song);
-        }
 
-        System.out.println(message());
+            downloadButton.click();
+            downloaded.add(song);
+
+            System.out.println(downloaded.size() + "/" + playlist.getSongs().size() + " : Downloaded song " + song.getFullName() );
+        }
     }
 
     private void skip(Song song) {
