@@ -29,7 +29,7 @@ public class MyChromeDriver {
 
     public WebElement findElement(By by) throws ElementNotFoundInTimeException {
         try {
-            return new WebDriverWait(driver, Duration.ofSeconds(10))
+            return new WebDriverWait(driver, Duration.ofSeconds(30))
                     .until(d -> d.findElement(by));
         } catch (TimeoutException e) {
             throw new ElementNotFoundInTimeException();
@@ -50,5 +50,17 @@ public class MyChromeDriver {
 
     public void quit() {
         driver.quit();
+    }
+
+    public void closeOtherTabs() {
+        String currentHandle = driver.getWindowHandle();
+        for (String handle : driver.getWindowHandles()) {
+            if (!handle.equals(currentHandle)) {
+                driver.switchTo().window(handle);
+                driver.close();
+            }
+        }
+        // Switch back so the driver can continue interacting with the page
+        driver.switchTo().window(currentHandle);
     }
 }

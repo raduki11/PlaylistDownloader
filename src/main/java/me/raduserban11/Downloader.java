@@ -93,8 +93,12 @@ public class Downloader {
                 continue;
             }
 
+            // ... inside your download() loop
             downloadButton.click();
             downloaded.add(song);
+
+            // Close the ad tab immediately
+            driver.closeOtherTabs();
 
             System.out.println(downloaded.size() + "/" + playlist.getSongs().size() + " : Downloaded song " + song.getFullName() );
         }
